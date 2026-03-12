@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grace Adele Lim — 9–6 & 6–9</title>
+  <title>Grace Adele — 9–6 & 6–9</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,7 +12,7 @@
       --ink: #0f0e0b;
       --paper: #f5f0e8;
       --cream: #ede7d6;
-      --accent: #c8392b;
+      --accent: #6b7c45;
       --muted: #7a7060;
       --gutter: 3rem;
       --nav-h: 57px;
@@ -100,22 +100,19 @@
     }
     .hero-right {
       padding: 5rem var(--gutter) 4rem;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      position: relative; overflow: hidden;
+      display: flex; flex-direction: row; align-items: flex-end;
+      gap: 2.5rem; overflow: hidden;
     }
     .big-hours {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
       font-family: 'Playfair Display', serif;
       font-weight: 900;
-      font-size: clamp(6rem, 15vw, 18rem);
+      font-size: clamp(5rem, 9vw, 11rem);
       color: var(--cream); line-height: 0.85;
       letter-spacing: -0.05em; user-select: none; white-space: nowrap;
+      flex-shrink: 0;
     }
     .hero-desc {
-      position: relative; z-index: 2;
-      font-size: 0.85rem; line-height: 1.9;
-      max-width: 380px; margin-left: auto;
+      font-size: 0.85rem; line-height: 1.9; flex: 1;
     }
     .hero-desc strong { font-weight: 500; color: var(--accent); }
 
@@ -339,8 +336,8 @@
       :root { --gutter: 1.5rem; }
       .hero { grid-template-columns: 1fr; }
       .hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
-      .hero-right { min-height: 50vh; }
-      .big-hours { font-size: 5rem; }
+      .hero-right { min-height: 40vh; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .big-hours { font-size: 4.5rem; }
       .about-grid { grid-template-columns: 1fr; }
       .about-col-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
       .timeline::before { left: 5rem; }
@@ -367,15 +364,15 @@
   <div class="hero">
     <div class="hero-left">
       <p class="hero-eyebrow">Marketing Professional &amp; Human Being</p>
-      <h1 class="hero-name">YOUR<br/><em>NAME</em><br/>HERE</h1>
-      <p class="hero-tagline">Marketer by day<br/>Calligrapher, crocheter &<br/>beginner plant parent by night</p>
+      <h1 class="hero-name">Grace<br/><em>Adele</em><br/>Lim</h1>
+      <p class="hero-tagline">Marketer by day<br/>Calligrapher, crocheter &<br/>reluctant plant parent by night</p>
       <p class="scroll-hint">Scroll to explore</p>
     </div>
     <div class="hero-right">
       <div class="big-hours">9–6<br/>6–9</div>
       <p class="hero-desc">
         There's the person you are at your desk, and then there's who you become after 6pm.
-        This site is both. <strong>7 years of marketing and communications experience</strong>
+        This site is both. <strong>7 years of marketing craft</strong> across Singapore and Southeast Asia — and everything else that makes the work worth doing.
       </p>
     </div>
   </div>
@@ -393,7 +390,7 @@
       </div>
       <div class="about-col-right">
         <div class="about-body">
-          <p>Hi — I'm [Your Name]. I've spent 7 years building brands and running campaigns across Singapore, Thailand, and Indonesia. I've worked in defence comms, energy, ed-tech, and SaaS — which sounds scattered, but the through-line is always the same: figure out what actually makes people pay attention, and then make that.</p>
+          <p>Hi — I'm Grace. I've spent 7 years building brands and running campaigns across Singapore, Thailand, and Indonesia. I've worked in defence comms, energy, ed-tech, and SaaS — which sounds scattered, but the through-line is always the same: figure out what actually makes people pay attention, and then make that.</p>
           <p>I like the full stack of marketing — the strategy and the spreadsheet, the campaign brief and the caption. I'm comfortable owning a budget, managing an agency, and writing the copy myself when it needs to be just right.</p>
           <p>Outside of that, I make things with my hands, move my body, and attempt to maintain a small collection of plants that are, at best, tolerating me.</p>
         </div>
@@ -403,8 +400,8 @@
             <div class="stat-label">Years in Marketing</div>
           </div>
           <div class="stat">
-            <div class="stat-num">3</div>
-            <div class="stat-label">Markets in SEA</div>
+            <div class="stat-num">4</div>
+            <div class="stat-label">Hobbies after hours</div>
           </div>
           <div class="stat">
             <div class="stat-num">∞</div>
@@ -563,24 +560,14 @@
   <footer>
     <div class="footer-left">Let's talk — <em>I don't bite.</em></div>
     <div class="footer-right">
-      <a href="mailto:your@email.com">your@email.com</a>
+      <a href="/cdn-cgi/l/email-protection#364f59434476535b575f5a1855595b"><span class="__cf_email__" data-cfemail="89f0e6fcfbc9ece4e8e0e5a7eae6e4">[email&#160;protected]</span></a>
       &nbsp;·&nbsp;
-      <a href="https://linkedin.com/in/yourname" target="_blank">linkedin.com/in/yourname</a>
+      <a href="https://www.linkedin.com/in/graceadelelimxy/" target="_blank">linkedin.com/in/graceadelelimxy</a>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const items = document.querySelectorAll('.timeline-item');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    items.forEach(item => observer.observe(item));
-  </script>
-
-</body>
-</html>
+        if (entry.isInte
