@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOUR NAME — 9–6 & 6–9</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0f0e0b;
+      --paper: #f5f0e8;
+      --cream: #ede7d6;
+      --accent: #c8392b;
+      --muted: #7a7060;
+      --gutter: 3rem;
+      --nav-h: 57px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      cursor: crosshair;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.5;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      height: var(--nav-h);
+      padding: 0 var(--gutter);
+      border-bottom: 1.5px solid var(--ink);
+      background: var(--paper);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.1rem;
+      letter-spacing: -0.02em; text-decoration: none; color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--ink); transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1.5px solid var(--ink);
+      padding-top: var(--nav-h);
+    }
+    .hero-left {
+      padding: 5rem var(--gutter) 4rem;
+      border-right: 1.5px solid var(--ink);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .hero-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 8vw, 9rem);
+      line-height: 0.9; letter-spacing: -0.03em;
+      margin-top: 1.5rem;
+    }
+    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-tagline {
+      font-size: 0.7rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 2rem; line-height: 1.8;
+    }
+    .scroll-hint {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-top: 3rem;
+    }
+    .scroll-hint::before {
+      content: ''; display: block;
+      width: 40px; height: 1px; background: var(--muted);
+    }
+    .hero-right {
+      padding: 5rem var(--gutter) 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      position: relative; overflow: hidden;
+    }
+    .big-hours {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(6rem, 15vw, 18rem);
+      color: var(--cream); line-height: 0.85;
+      letter-spacing: -0.05em; user-select: none; white-space: nowrap;
+    }
+    .hero-desc {
+      position: relative; z-index: 2;
+      font-size: 0.85rem; line-height: 1.9;
+      max-width: 380px; margin-left: auto;
+    }
+    .hero-desc strong { font-weight: 500; color: var(--accent); }
+
+    /* ── SECTION HEADERS ── consistent 2-col grid */
+    section { border-bottom: 1.5px solid var(--ink); }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      align-items: baseline;
+      padding: 1.4rem var(--gutter);
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .section-number {
+      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.5fr;
+    }
+    .about-col-left {
+      padding: 4rem var(--gutter);
+      border-right: 1.5px solid var(--ink);
+    }
+    .about-label {
+      font-size: 0.55rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .about-statement {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.2vw, 2rem);
+      line-height: 1.4; font-weight: 400;
+    }
+    .about-statement em { font-style: italic; }
+
+    .about-col-right { padding: 4rem var(--gutter); }
+    .about-body {
+      font-size: 0.82rem; line-height: 2;
+      color: var(--ink); max-width: 520px;
+    }
+    .about-body p + p { margin-top: 1.2rem; }
+
+    .stat-row {
+      display: flex; gap: 3rem;
+      margin-top: 3rem; padding-top: 2rem;
+      border-top: 1px solid var(--cream);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 900;
+      line-height: 1; color: var(--accent);
+    }
+    .stat-label {
+      font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
+    }
+
+    /* ── TIMELINE ── */
+    #nine-six .content { padding: 0 var(--gutter) 2rem; }
+
+    /* The vertical rule sits at exactly 4rem (matches section-number col) */
+    .timeline {
+      position: relative;
+      max-width: 860px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8rem; top: 0; bottom: 0;
+      width: 1.5px; background: var(--ink);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+    .timeline-year-col {
+      padding: 3rem 1.5rem 3rem 0;
+      text-align: right;
+    }
+    .timeline-year {
+      font-size: 0.58rem; letter-spacing: 0.15em; color: var(--muted);
+    }
+
+    .timeline-body {
+      padding: 3rem 0 3rem 2.5rem;
+      border-top: 1px solid var(--cream);
+      position: relative;
+    }
+    /* dot on the rule */
+    .timeline-body::before {
+      content: '';
+      position: absolute; left: -5px; top: 3.3rem;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 0 1.5px var(--accent);
+    }
+
+    .timeline-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 0.2rem;
+    }
+    .timeline-company {
+      font-size: 0.6rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .timeline-desc {
+      font-size: 0.78rem; line-height: 1.9;
+      color: var(--muted); max-width: 500px;
+    }
+    .timeline-highlight {
+      font-size: 0.72rem; line-height: 1.8; color: var(--muted);
+      max-width: 500px; margin-top: 0.9rem;
+      padding-top: 0.8rem; border-top: 1px solid var(--cream);
+    }
+    .timeline-highlight span { color: var(--accent); font-weight: 500; }
+
+    .timeline-footer {
+      display: flex; align-items: center;
+      gap: 1.5rem; margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.55rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.3rem 0.7rem;
+      border: 1px solid var(--ink); color: var(--ink);
+    }
+
+    /* "View work" link */
+    .view-work {
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent);
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .view-work:hover { opacity: 0.65; }
+    .view-work::after { content: '→'; }
+
+    /* ── 6–9 HOBBIES ── */
+    #six-nine .content {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .hobby-card {
+      padding: 3rem 2.5rem;
+      border-right: 1.5px solid var(--ink);
+      transition: background 0.3s ease;
+    }
+    .hobby-card:last-child { border-right: none; }
+    .hobby-card:hover { background: var(--ink); }
+    .hobby-card:hover .hobby-title,
+    .hobby-card:hover .hobby-desc,
+    .hobby-card:hover .hobby-num { color: var(--paper); }
+    .hobby-card:hover .hobby-icon { filter: invert(1) brightness(10); }
+
+    .hobby-num {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      color: var(--muted); margin-bottom: 2rem; transition: color 0.3s;
+    }
+    .hobby-icon {
+      font-size: 2.5rem; margin-bottom: 1.5rem;
+      display: block; transition: filter 0.3s;
+    }
+    .hobby-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900;
+      line-height: 1.1; margin-bottom: 1rem; transition: color 0.3s;
+    }
+    .hobby-desc {
+      font-size: 0.73rem; line-height: 1.9;
+      color: var(--muted); transition: color 0.3s;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem var(--gutter);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-left {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900;
+    }
+    .footer-left em { font-style: italic; color: var(--accent); }
+    .footer-right {
+      font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left > * { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+    .hero-eyebrow  { animation-delay: 0.1s; }
+    .hero-name     { animation-delay: 0.25s; }
+    .hero-tagline  { animation-delay: 0.4s; }
+    .scroll-hint   { animation-delay: 0.55s; }
+    .hero-desc     { animation: fadeUp 0.8s 0.4s ease forwards; opacity: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      :root { --gutter: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
+      .hero-right { min-height: 50vh; }
+      .big-hours { font-size: 5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-col-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
+      .timeline::before { left: 5rem; }
+      .timeline-item { grid-template-columns: 5rem 1fr; }
+      #six-nine .content { grid-template-columns: 1fr 1fr; }
+      .hobby-card:nth-child(2) { border-right: none; }
+      .hobby-card:nth-child(3) { border-top: 1.5px solid var(--ink); }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">YN</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#nine-six">9–6</a></li>
+      <li><a href="#six-nine">6–9</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Marketing Professional &amp; Human Being</p>
+      <h1 class="hero-name">YOUR<br/><em>NAME</em><br/>HERE</h1>
+      <p class="hero-tagline">Marketer by day<br/>Calligrapher, crocheter &<br/>reluctant plant parent by night</p>
+      <p class="scroll-hint">Scroll to explore</p>
+    </div>
+    <div class="hero-right">
+      <div class="big-hours">9–6<br/>6–9</div>
+      <p class="hero-desc">
+        There's the person you are at your desk, and then there's who you become after 6pm.
+        This site is both. <strong>7 years of marketing craft</strong> across Singapore and Southeast Asia — and everything else that makes the work worth doing.
+      </p>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">About <em>Me</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-col-left">
+        <p class="about-label">In a sentence</p>
+        <p class="about-statement">A marketer who <em>thinks</em> in strategy, makes things <em>carefully</em>, and waters her plants <em>inconsistently</em>.</p>
+      </div>
+      <div class="about-col-right">
+        <div class="about-body">
+          <p>Hi — I'm [Your Name]. I've spent 7 years building brands and running campaigns across Singapore, Thailand, and Indonesia. I've worked in defence comms, energy, ed-tech, and SaaS — which sounds scattered, but the through-line is always the same: figure out what actually makes people pay attention, and then make that.</p>
+          <p>I like the full stack of marketing — the strategy and the spreadsheet, the campaign brief and the caption. I'm comfortable owning a budget, managing an agency, and writing the copy myself when it needs to be just right.</p>
+          <p>Outside of that, I make things with my hands, move my body, and attempt to maintain a small collection of plants that are, at best, tolerating me.</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">7</div>
+            <div class="stat-label">Years in Marketing</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Markets in SEA</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Yarn in my stash</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9–6 -->
+  <section id="nine-six">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">The <em>9–6</em></h2>
+    </div>
+    <div class="content">
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-year-col">
+            <span class="timeline-year">2023–Now</span>
+          </div>
+          <div class="timeline-body">
+            <p class="timeline-role">Marketing Manager</p>
+            <p class="timeline-company">Cloudsine</p>
+            <p class="timeline-desc">Running regional marketing across Singapore, Thailand, and Indonesia — owning the strategy, the six-figure budget, and the full delivery stack. Events, content, SEO, and enough pipeline to keep things interesting.</p>
+            <div class="timeline-highlight">
+              <span>30% increase</span> in qualified leads in 12 months &nbsp;·&nbsp;
+              <span>USD $500K+</span> in pipeline from events annually &nbsp;·&nbsp;
+              <span>50% follower growth</span> on LinkedIn &nbsp;·&nbsp;
+              <span>30% uplift</span> in organic traffic
+            </div>
+            <div class="timeline-footer">
+              <div class="timeline-tags">
+                <span class="tag">Regional Strategy</span>
+                <span class="tag">Demand Gen</span>
+                <span class="tag">Events</span>
+                <span class="tag">SEO</span>
+              </div>
+              <a href="cloudsine.html" class="view-work">View work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year-col">
+            <span class="timeline-year">2022–2023</span>
+          </div>
+          <div class="timeline-body">
+            <p class="timeline-role">Marketing Executive</p>
+            <p class="timeline-company">Crimson Education</p>
+            <p class="timeline-desc">Built out the social and email engine from scratch — Telegram, WhatsApp, Facebook, nurture sequences — and ran webinar campaigns that contributed meaningful revenue, fast.</p>
+            <div class="timeline-highlight">
+              <span>S$800K+</span> in webinar revenue within 6 months &nbsp;·&nbsp;
+              <span>4× lead growth</span> across social channels &nbsp;·&nbsp;
+              <span>10% open rate lift</span> on email
+            </div>
+            <div class="timeline-footer">
+              <div class="timeline-tags">
+                <span class="tag">Social Media</span>
+                <span class="tag">Email Nurture</span>
+                <span class="tag">Webinars</span>
+                <span class="tag">Lead Gen</span>
+              </div>
+              <a href="crimson.html" class="view-work">View work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year-col">
+            <span class="timeline-year">2021–2022</span>
+          </div>
+          <div class="timeline-body">
+            <p class="timeline-role">Marketing Executive</p>
+            <p class="timeline-company">Senoko Energy</p>
+            <p class="timeline-desc">User acquisition in a competitive commodity market — working with media and creative agencies, managing landing pages, and building a partner programme from the ground up.</p>
+            <div class="timeline-highlight">
+              <span>14+ strategic partners</span> onboarded &nbsp;·&nbsp;
+              <span>50% growth</span> on Instagram &nbsp;·&nbsp;
+              <span>15% growth</span> on Facebook
+            </div>
+            <div class="timeline-footer">
+              <div class="timeline-tags">
+                <span class="tag">User Acquisition</span>
+                <span class="tag">Partnerships</span>
+                <span class="tag">Agency Management</span>
+              </div>
+              <a href="senoko.html" class="view-work">View work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year-col">
+            <span class="timeline-year">2019–2021</span>
+          </div>
+          <div class="timeline-body">
+            <p class="timeline-role">Corp. Comms Asst. Manager</p>
+            <p class="timeline-company">DSTA</p>
+            <p class="timeline-desc">Where I learned to write clearly, work with journalists, and tell stories that serve a purpose. Media relations, employer branding, internal comms — and coverage in CNA, The Straits Times, and Lianhe Zaobao.</p>
+            <div class="timeline-highlight">
+              <span>20% increase</span> in social engagement &nbsp;·&nbsp;
+              Coverage in <span>CNA, The Straits Times & Lianhe Zaobao</span>
+            </div>
+            <div class="timeline-footer">
+              <div class="timeline-tags">
+                <span class="tag">Media Relations</span>
+                <span class="tag">Employer Branding</span>
+                <span class="tag">Internal Comms</span>
+              </div>
+              <a href="dsta.html" class="view-work">View work</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6–9 -->
+  <section id="six-nine">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">The <em>6–9</em></h2>
+    </div>
+    <div class="content">
+      <div class="hobby-card">
+        <p class="hobby-num">01 /</p>
+        <span class="hobby-icon">🏋️</span>
+        <h3 class="hobby-title">Moving<br/>my body</h3>
+        <p class="hobby-desc">Exercise is the reset button. Whether it's lifting, running, or just showing up — movement is how I process the day and show up better tomorrow.</p>
+      </div>
+      <div class="hobby-card">
+        <p class="hobby-num">02 /</p>
+        <span class="hobby-icon">✍️</span>
+        <h3 class="hobby-title">Calligraphy</h3>
+        <p class="hobby-desc">Slow, deliberate, and tactile — everything that a screen is not. There's something deeply satisfying about making a letter look exactly right.</p>
+      </div>
+      <div class="hobby-card">
+        <p class="hobby-num">03 /</p>
+        <span class="hobby-icon">🧶</span>
+        <h3 class="hobby-title">Crocheting</h3>
+        <p class="hobby-desc">Turning yarn into something real. It's meditative, portable, and produces an ever-growing pile of things that my friends and family now own.</p>
+      </div>
+      <div class="hobby-card">
+        <p class="hobby-num">04 /</p>
+        <span class="hobby-icon">🪴</span>
+        <h3 class="hobby-title">Attempting<br/>plants</h3>
+        <p class="hobby-desc">I love them. I'm trying. Some of them are thriving. Others are making their disappointment very clear. We're working on it together.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">Let's talk — <em>I don't bite.</em></div>
+    <div class="footer-right">
+      <a href="mailto:your@email.com">your@email.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://linkedin.com/in/yourname" target="_blank">linkedin.com/in/yourname</a>
+    </div>
+  </footer>
+
+  <script>
+    const items = document.querySelectorAll('.timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    items.forEach(item => observer.observe(item));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cloudsine — YOUR NAME</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0f0e0b;
+      --paper: #f5f0e8;
+      --cream: #ede7d6;
+      --accent: #c8392b;
+      --muted: #7a7060;
+      --gutter: 3rem;
+      --nav-h: 57px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Mono', monospace; cursor: crosshair; overflow-x: hidden; }
+
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.5;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      height: var(--nav-h); padding: 0 var(--gutter);
+      border-bottom: 1.5px solid var(--ink); background: var(--paper);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+    .nav-back { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back::before { content: '←'; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .job-hero {
+      padding-top: var(--nav-h);
+      border-bottom: 1.5px solid var(--ink);
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 52vh;
+    }
+    .job-hero-left {
+      padding: 4.5rem var(--gutter);
+      border-right: 1.5px solid var(--ink);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .job-eyebrow {
+      font-size: 0.58rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .job-company {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 7vw, 7.5rem);
+      line-height: 0.88; letter-spacing: -0.03em;
+      margin-top: 1.2rem;
+    }
+    .job-company em { font-style: italic; color: var(--accent); }
+    .job-role {
+      font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 1.8rem;
+    }
+    .job-hero-right {
+      padding: 4.5rem var(--gutter);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .job-summary {
+      font-size: 0.88rem; line-height: 1.95;
+      max-width: 440px; margin-left: auto;
+    }
+    .job-summary strong { color: var(--accent); font-weight: 500; }
+
+    /* METRICS BAND */
+    .metrics-band {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .metric-cell {
+      padding: 2.5rem var(--gutter);
+      border-right: 1.5px solid var(--ink);
+    }
+    .metric-cell:last-child { border-right: none; }
+    .metric-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 900;
+      line-height: 1; color: var(--accent);
+    }
+    .metric-label {
+      font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.4rem;
+      line-height: 1.5;
+    }
+
+    /* SECTION STRUCTURE */
+    section { border-bottom: 1.5px solid var(--ink); }
+
+    .section-header {
+      display: grid; grid-template-columns: 4rem 1fr;
+      align-items: baseline;
+      padding: 1.4rem var(--gutter);
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .section-number { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); }
+    .section-title {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      letter-spacing: -0.03em; line-height: 1;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* PROJECT GRID */
+    .project-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+    }
+    .project-card {
+      padding: 3rem var(--gutter);
+      border-right: 1.5px solid var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .project-card:nth-child(3n) { border-right: none; }
+
+    .project-type {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700; line-height: 1.2;
+    }
+    .project-desc {
+      font-size: 0.76rem; line-height: 1.85; color: var(--muted);
+      flex: 1;
+    }
+    .project-result {
+      font-size: 0.7rem; line-height: 1.7;
+      padding-top: 1rem; border-top: 1px solid var(--cream); color: var(--muted);
+    }
+    .project-result span { color: var(--accent); font-weight: 500; }
+
+    /* IMAGE PLACEHOLDER */
+    .project-img {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--cream);
+      border: 1px dashed var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* WIDE CARD — spans full row */
+    .project-card.wide {
+      grid-column: 1 / -1;
+      border-right: none;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .wide-left { display: flex; flex-direction: column; gap: 1rem; }
+    .wide-right { display: flex; flex-direction: column; gap: 1rem; }
+    .wide-img {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--cream);
+      border: 1px dashed var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* UPLOAD NOTE */
+    .upload-note {
+      display: block; margin-top: 0.4rem;
+      font-size: 0.55rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); opacity: 0.7;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem var(--gutter);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-left { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; }
+    .footer-left em { font-style: italic; color: var(--accent); }
+    .footer-right { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .job-hero-left > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+    .job-eyebrow  { animation-delay: 0.05s; }
+    .job-company  { animation-delay: 0.15s; }
+    .job-role     { animation-delay: 0.25s; }
+    .job-hero-right .job-summary { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
+
+    .project-card { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 1.5rem; }
+      .job-hero { grid-template-columns: 1fr; min-height: auto; }
+      .job-hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
+      .metrics-band { grid-template-columns: 1fr 1fr; }
+      .metric-cell:nth-child(2) { border-right: none; }
+      .metric-cell:nth-child(3), .metric-cell:nth-child(4) { border-top: 1.5px solid var(--ink); }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { border-right: none; grid-column: auto; }
+      .project-card.wide { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">YN</a>
+    <a href="index.html" class="nav-back">Back to portfolio</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="job-hero">
+    <div class="job-hero-left">
+      <p class="job-eyebrow">Sep 2023 – Present &nbsp;·&nbsp; Singapore / SEA</p>
+      <h1 class="job-company">Cloud<em>sine</em></h1>
+      <p class="job-role">Marketing Manager</p>
+    </div>
+    <div class="job-hero-right">
+      <p class="job-summary">
+        My first regional role — and the one where I learned what it means to own a marketing function end-to-end. Strategy, budget, events, content, SEO, and a team of external partners across three markets. Everything from six-figure pipeline to LinkedIn captions.
+      </p>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-band">
+    <div class="metric-cell">
+      <div class="metric-num">30%</div>
+      <div class="metric-label">Increase in qualified leads in 12 months</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">$500K+</div>
+      <div class="metric-label">USD pipeline generated from events annually</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">50%</div>
+      <div class="metric-label">LinkedIn follower growth</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">11</div>
+      <div class="metric-label">New keywords ranking via SEO</div>
+    </div>
+  </div>
+
+  <!-- EVENTS -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Events <em>I Ran</em></h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-card">
+        <p class="project-type">Third-Party Conference</p>
+        <h3 class="project-title">Regional conference activations — SG, TH, ID</h3>
+        <div class="project-img">Add event photo or booth shot</div>
+        <p class="project-desc">Managed end-to-end event participation across key regional conferences. Coordinated logistics, sponsorship deliverables, booth design, and on-ground activation for markets across Southeast Asia.</p>
+        <p class="project-result">Contributed to <span>100+ MQLs</span> and <span>USD $500K+</span> in annual pipeline</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Webinar Programme</p>
+        <h3 class="project-title">Thought leadership webinar series</h3>
+        <div class="project-img">Add webinar screenshot or promo graphic</div>
+        <p class="project-desc">Built and ran a recurring webinar programme — topic selection, speaker coordination, promotion across email and social, and post-event lead follow-up with the SDR team.</p>
+        <p class="project-result">Part of <span>100+ MQL</span> annual event target</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Add your third event</p>
+        <h3 class="project-title">Event name or campaign title</h3>
+        <div class="project-img">Add image</div>
+        <p class="project-desc">Describe the event, your role, and what made it work. Keep it honest — what did you actually own, and what did you learn?</p>
+        <p class="project-result"><span>Replace</span> with real result</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGN RESULTS -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Campaign <em>Results</em></h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-card">
+        <p class="project-type">Regional Demand Gen</p>
+        <h3 class="project-title">Integrated regional marketing strategy</h3>
+        <p class="project-desc">Designed and executed an integrated strategy across Singapore, Thailand, and Indonesia — allocating a six-figure budget across digital and field channels to maximise ROI across the funnel.</p>
+        <p class="project-result"><span>30% increase</span> in qualified leads within 12 months</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">SEO</p>
+        <h3 class="project-title">Search visibility programme</h3>
+        <p class="project-desc">Partnered with an SEO agency to build a keyword strategy, improve technical foundations, and produce content targeting high-intent search terms across core product areas.</p>
+        <p class="project-result"><span>30% increase</span> in organic traffic &nbsp;·&nbsp; <span>11 new keywords</span> ranking</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Brand & Web</p>
+        <h3 class="project-title">Brand refresh & website update</h3>
+        <p class="project-desc">Managed cross-functional projects with internal teams and external vendors to deliver a brand refresh and supporting marketing materials — from brief to final delivery.</p>
+        <p class="project-result">Add a specific outcome or milestone here</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Content <em>Samples</em></h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-card wide">
+        <div class="wide-left">
+          <p class="project-type">LinkedIn Content Strategy</p>
+          <h3 class="project-title">Insight-led LinkedIn content</h3>
+          <p class="project-desc">Developed and executed a content strategy built on industry insights, product education, and founder-led thought leadership. Planned, wrote, and managed the calendar across all formats — carousels, long-form posts, and short-form copy.</p>
+          <p class="project-result"><span>50% follower growth</span> &nbsp;·&nbsp; Increased engagement rate across all post types</p>
+          <span class="upload-note">↑ Add 2–3 top-performing post screenshots below</span>
+        </div>
+        <div class="wide-right">
+          <div class="wide-img">LinkedIn post screenshot 1</div>
+          <div class="wide-img">LinkedIn post screenshot 2</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <p class="project-type">Case Study</p>
+        <h3 class="project-title">Customer case study</h3>
+        <div class="project-img">Add case study cover or key page</div>
+        <p class="project-desc">Produced full-funnel marketing assets to support the TOFU–BOFU journey, including case studies that made technical value tangible for non-technical buyers.</p>
+        <p class="project-result">Add link or result</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Blog / Long-form</p>
+        <h3 class="project-title">Blog post or thought leadership piece</h3>
+        <div class="project-img">Add screenshot or cover image</div>
+        <p class="project-desc">Add a description of the piece, why you wrote it, and what you were trying to achieve — whether ranking, pipeline, or brand credibility.</p>
+        <p class="project-result">Add link or result</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Landing Page</p>
+        <h3 class="project-title">Campaign or product landing page</h3>
+        <div class="project-img">Add screenshot</div>
+        <p class="project-desc">Produced landing pages to support TOFU–BOFU conversion journeys — writing copy, briefing design, and iterating based on performance data.</p>
+        <p class="project-result">Add conversion rate or result</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE ASSETS -->
+  <section>
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Creative <em>Assets</em></h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-card">
+        <p class="project-type">Social Ads</p>
+        <h3 class="project-title">Paid social creatives</h3>
+        <div class="project-img">Add ad creative</div>
+        <p class="project-desc">Brief, produce, and iterate on social ad creatives across LinkedIn and other channels — working with designers to align copy and visual for each audience.</p>
+        <p class="project-result">Add result or CTR</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Event Collateral</p>
+        <h3 class="project-title">Conference & event materials</h3>
+        <div class="project-img">Add banner, booth, or brochure image</div>
+        <p class="project-desc">Managed production of event collateral — banners, brochures, branded giveaways — ensuring consistency with brand guidelines and relevance to each market.</p>
+        <p class="project-result">Add note</p>
+      </div>
+      <div class="project-card">
+        <p class="project-type">Add your asset</p>
+        <h3 class="project-title">Name your asset type</h3>
+        <div class="project-img">Add image</div>
+        <p class="project-desc">Describe the asset, your role in creating it, and what problem it solved.</p>
+        <p class="project-result">Replace with real result</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">Next: <a href="crimson.html" style="color:var(--accent);text-decoration:none;font-style:italic;">Crimson Education →</a></div>
+    <div class="footer-right">
+      <a href="index.html">← Back to portfolio</a>
+    </div>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.project-card');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    cards.forEach(c => obs.observe(c));
+  </script>
+</body>
+</html>
