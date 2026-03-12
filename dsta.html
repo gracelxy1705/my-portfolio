@@ -3,19 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DSTA — YOUR NAME</title>
+  <title>DSTA — Grace Adele Lim</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --ink: #0f0e0b; --paper: #f5f0e8; --cream: #ede7d6; --accent: #c8392b; --muted: #7a7060; --gutter: 3rem; --nav-h: 57px; }
+    :root {
+      --ink: #0f0e0b;
+      --paper: #f5f0e8;
+      --cream: #ede7d6;
+      --accent: #6b7c45;
+      --muted: #7a7060;
+      --gutter: 3rem;
+      --nav-h: 57px;
+    }
     html { scroll-behavior: smooth; }
     body { background: var(--paper); color: var(--ink); font-family: 'DM Mono', monospace; cursor: crosshair; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.5;
+    }
+
+    /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); padding: 0 var(--gutter); border-bottom: 1.5px solid var(--ink); background: var(--paper); }
     .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
     .nav-back { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
     .nav-back::before { content: '←'; }
     .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
     .job-hero { padding-top: var(--nav-h); border-bottom: 1.5px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr; min-height: 52vh; }
     .job-hero-left { padding: 4.5rem var(--gutter); border-right: 1.5px solid var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
     .job-eyebrow { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
@@ -25,51 +41,113 @@
     .job-hero-right { padding: 4.5rem var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; }
     .job-summary { font-size: 0.88rem; line-height: 1.95; max-width: 440px; margin-left: auto; }
     .job-summary strong { color: var(--accent); font-weight: 500; }
-    .metrics-band { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1.5px solid var(--ink); }
+
+    /* METRICS — 3 cells only */
+    .metrics-band { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1.5px solid var(--ink); }
     .metric-cell { padding: 2.5rem var(--gutter); border-right: 1.5px solid var(--ink); }
     .metric-cell:last-child { border-right: none; }
     .metric-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; line-height: 1; color: var(--accent); }
     .metric-label { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
+
+    /* SECTIONS */
     section { border-bottom: 1.5px solid var(--ink); }
     .section-header { display: grid; grid-template-columns: 4rem 1fr; align-items: baseline; padding: 1.4rem var(--gutter); border-bottom: 1.5px solid var(--ink); }
     .section-number { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); }
     .section-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2rem, 4vw, 3.8rem); letter-spacing: -0.03em; line-height: 1; }
     .section-title em { font-style: italic; color: var(--accent); }
+
+    /* CARDS */
     .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-    .project-card { padding: 3rem var(--gutter); border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); display: flex; flex-direction: column; gap: 1rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .project-card {
+      padding: 3rem var(--gutter);
+      border-right: 1.5px solid var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      display: flex; flex-direction: column; gap: 1rem;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
     .project-card.visible { opacity: 1; transform: translateY(0); }
     .project-card:nth-child(3n) { border-right: none; }
+    .project-card:last-child:nth-child(3n+1) { border-right: none; grid-column: 1 / -1; }
+
     .project-type { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
     .project-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
     .project-desc { font-size: 0.76rem; line-height: 1.85; color: var(--muted); flex: 1; }
     .project-result { font-size: 0.7rem; line-height: 1.7; padding-top: 1rem; border-top: 1px solid var(--cream); color: var(--muted); }
     .project-result span { color: var(--accent); font-weight: 500; }
-    .project-img { width: 100%; aspect-ratio: 16/9; background: var(--cream); border: 1px dashed var(--muted); display: flex; align-items: center; justify-content: center; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
-    .project-card.wide { grid-column: 1 / -1; border-right: none; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+    /* Real images */
+    .project-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .project-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-img img { transform: scale(1.03); }
+
+    /* WIDE CARD — 2-col layout for featured card */
+    .project-card.wide {
+      grid-column: 1 / -1;
+      border-right: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
     .wide-left { display: flex; flex-direction: column; gap: 1rem; }
     .wide-right { display: flex; flex-direction: column; gap: 1rem; }
-    .wide-img { width: 100%; aspect-ratio: 16/9; background: var(--cream); border: 1px dashed var(--muted); display: flex; align-items: center; justify-content: center; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-    .upload-note { display: block; margin-top: 0.4rem; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); opacity: 0.7; }
-    footer { padding: 2.5rem var(--gutter); display: flex; justify-content: space-between; align-items: center; }
+    .wide-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .wide-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .project-card.wide:hover .wide-img img { transform: scale(1.02); }
+
+    /* FOOTER */
+    footer { padding: 2.5rem var(--gutter); display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--ink); }
     .footer-left { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; }
     .footer-left em { font-style: italic; color: var(--accent); }
     .footer-right { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
     .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .footer-right a:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .job-hero-left > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
-    .job-eyebrow { animation-delay: 0.05s; } .job-company { animation-delay: 0.15s; } .job-role { animation-delay: 0.25s; }
+    .job-eyebrow { animation-delay: 0.05s; }
+    .job-company { animation-delay: 0.15s; }
+    .job-role { animation-delay: 0.25s; }
     .job-hero-right .job-summary { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
+
+    .metric-cell { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .metric-cell.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       :root { --gutter: 1.5rem; }
       .job-hero { grid-template-columns: 1fr; min-height: auto; }
       .job-hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
+      .job-summary { margin-left: 0; }
       .metrics-band { grid-template-columns: 1fr 1fr; }
       .metric-cell:nth-child(2) { border-right: none; }
-      .metric-cell:nth-child(3), .metric-cell:nth-child(4) { border-top: 1.5px solid var(--ink); }
+      .metric-cell:nth-child(3) { border-top: 1.5px solid var(--ink); grid-column: 1 / -1; }
       .project-grid { grid-template-columns: 1fr; }
-      .project-card { border-right: none; grid-column: auto; }
-      .project-card.wide { grid-template-columns: 1fr; }
+      .project-card, .project-card.wide { border-right: none; grid-column: auto; grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
@@ -77,10 +155,11 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">YN</a>
+    <a href="index.html" class="nav-logo">GAL</a>
     <a href="index.html" class="nav-back">Back to portfolio</a>
   </nav>
 
+  <!-- HERO -->
   <div class="job-hero">
     <div class="job-hero-left">
       <p class="job-eyebrow">Jan 2019 – Apr 2021 &nbsp;·&nbsp; Singapore</p>
@@ -89,11 +168,12 @@
     </div>
     <div class="job-hero-right">
       <p class="job-summary">
-        Where I learned to write with precision and purpose. Working in defence communications meant clarity wasn't optional — every word carried weight. Media relations, employer branding, internal comms, and social strategy for one of Singapore's most respected government agencies. <strong>Secured coverage in CNA, The Straits Times, and Lianhe Zaobao.</strong>
+        Where I learned to write with precision and purpose. Two years managing social media, employer branding, internal comms, and media relations for one of Singapore's most respected government agencies. <strong>Secured coverage in CNA, The Straits Times, and Lianhe Zaobao.</strong> All written by hand, pre-GenAI. Yes, really.
       </p>
     </div>
   </div>
 
+  <!-- METRICS — 3 only -->
   <div class="metrics-band">
     <div class="metric-cell">
       <div class="metric-num">20%</div>
@@ -105,134 +185,114 @@
     </div>
     <div class="metric-cell">
       <div class="metric-num">2+</div>
-      <div class="metric-label">Years managing social, media, and internal comms</div>
-    </div>
-    <div class="metric-cell">
-      <div class="metric-num">—</div>
-      <div class="metric-label">Add a result you're proud of</div>
+      <div class="metric-label">Years managing social, media &amp; internal comms</div>
     </div>
   </div>
 
-  <!-- CONTENT -->
+  <!-- SOCIAL MEDIA — lead section -->
   <section>
     <div class="section-header">
       <span class="section-number">01</span>
-      <h2 class="section-title">Content <em>Samples</em></h2>
+      <h2 class="section-title">Social <em>Media</em></h2>
     </div>
     <div class="project-grid">
+
       <div class="project-card wide">
         <div class="wide-left">
-          <p class="project-type">Media Coverage</p>
-          <h3 class="project-title">Press coverage — CNA, The Straits Times & Lianhe Zaobao</h3>
-          <p class="project-desc">Led media relations strategy — identifying story angles, pitching to journalists, and managing interviews and spokesperson preparation. Secured meaningful coverage in Singapore's three main English and Chinese-language media outlets.</p>
-          <p class="project-result">Coverage in <span>Channel NewsAsia</span>, <span>The Straits Times</span> and <span>Lianhe Zaobao</span></p>
-          <span class="upload-note">↑ Add screenshots or links to press coverage</span>
+          <p class="project-type">Facebook &amp; Instagram</p>
+          <h3 class="project-title">Social media management & employer branding</h3>
+          <p class="project-desc">Managed Facebook and Instagram for DSTA — developing content that balanced recruitment messaging, organisational news, and brand storytelling for a public-sector audience where tone and trust matter as much as reach.</p>
+          <p class="project-desc">This included employee feature series, scholar spotlights, and recruitment campaigns designed to make a government agency feel human and attract the right talent.</p>
+          <p class="project-result"><span>20% growth</span> in followers and engagement across Facebook &amp; Instagram</p>
         </div>
         <div class="wide-right">
-          <div class="wide-img">Press coverage screenshot 1</div>
-          <div class="wide-img">Press coverage screenshot 2</div>
+          <div class="wide-img">
+            <img src="dsta-content-creation-1.png" alt="DSTA social content — scholar spotlight" />
+          </div>
+          <div class="wide-img">
+            <img src="dsta-employee-features.png" alt="DSTA employee feature posts on social media" />
+          </div>
+          <div class="wide-img">
+            <img src="dsta-content-creation-2.png" alt="DSTA Instagram and social content examples" />
+          </div>
         </div>
       </div>
 
-      <div class="project-card">
-        <p class="project-type">Employer Branding</p>
-        <h3 class="project-title">Employee features & storytelling content</h3>
-        <div class="project-img">Add employer branding content image</div>
-        <p class="project-desc">Developed employer branding content — employee feature stories, behind-the-scenes pieces, and recruitment campaigns — designed to attract talent and communicate what it's actually like to work at DSTA.</p>
-        <p class="project-result">Add reach or talent attraction result</p>
-      </div>
-      <div class="project-card">
-        <p class="project-type">Internal Communications</p>
-        <h3 class="project-title">Internal communications and feature stories</h3>
-        <div class="project-img">Add internal comms example</div>
-        <p class="project-desc">Produced internal communications aligned across engineering, talent, and corporate teams — ensuring messaging was consistent, clear, and relevant to different audiences within the organisation.</p>
-        <p class="project-result">Add readership or engagement result</p>
-      </div>
-      <div class="project-card">
-        <p class="project-type">Social Content</p>
-        <h3 class="project-title">Facebook & Instagram strategy</h3>
-        <div class="project-img">Add social post screenshot</div>
-        <p class="project-desc">Managed social media strategy for Facebook and Instagram — developing audience-focused content that grew followers and engagement while staying true to the brand's tone and positioning.</p>
-        <p class="project-result"><span>20% growth</span> in followers and engagement</p>
-      </div>
     </div>
   </section>
 
-  <!-- CAMPAIGN RESULTS -->
+  <!-- MEDIA RELATIONS -->
   <section>
     <div class="section-header">
       <span class="section-number">02</span>
-      <h2 class="section-title">Campaign <em>Results</em></h2>
+      <h2 class="section-title">Media <em>Relations</em></h2>
     </div>
     <div class="project-grid">
-      <div class="project-card">
-        <p class="project-type">Social Media</p>
-        <h3 class="project-title">Facebook & Instagram growth</h3>
-        <p class="project-desc">Managed social media strategy across Facebook and Instagram, growing followers and engagement by 20% through audience-focused content — balancing recruitment messaging with brand storytelling.</p>
-        <p class="project-result"><span>20% increase</span> in followers and engagement across both platforms</p>
+
+      <div class="project-card wide">
+        <div class="wide-left">
+          <p class="project-type">Press Coverage</p>
+          <h3 class="project-title">Coverage in CNA, The Straits Times & Lianhe Zaobao</h3>
+          <p class="project-desc">Led media relations — identifying story angles, pitching to journalists, and managing spokesperson preparation for Singapore's three main English and Chinese-language outlets. Coverage spanned technology programmes, national service milestones, and DSTA's young defence scientists initiative.</p>
+          <p class="project-result">Secured coverage in <span>Channel NewsAsia</span>, <span>The Straits Times</span> and <span>Lianhe Zaobao</span></p>
+        </div>
+        <div class="wide-right">
+          <div class="wide-img">
+            <img src="straits-times-news.png" alt="The Straits Times coverage — Student develops algorithm to detect fake news" />
+          </div>
+        </div>
       </div>
-      <div class="project-card">
-        <p class="project-type">Media Relations</p>
-        <h3 class="project-title">Proactive media programme</h3>
-        <p class="project-desc">Developed and executed proactive media relations — building journalist relationships, crafting pitches, and managing coverage requests to position DSTA as a credible voice in defence and technology.</p>
-        <p class="project-result">Coverage secured in <span>CNA, The Straits Times & Lianhe Zaobao</span></p>
-      </div>
-      <div class="project-card">
-        <p class="project-type">Add your result</p>
-        <h3 class="project-title">Campaign or initiative title</h3>
-        <p class="project-desc">Add a campaign or project you're proud of — even if the result isn't a metric. Sometimes the best work is a piece of writing or a campaign that just landed well.</p>
-        <p class="project-result">Replace with your result</p>
-      </div>
+
     </div>
   </section>
 
-  <!-- CREATIVE ASSETS -->
+  <!-- FEATURE STORIES -->
   <section>
     <div class="section-header">
       <span class="section-number">03</span>
-      <h2 class="section-title">Creative <em>Assets</em></h2>
+      <h2 class="section-title">Feature <em>Stories</em></h2>
     </div>
     <div class="project-grid">
       <div class="project-card">
-        <p class="project-type">Press Release / Pitch</p>
-        <h3 class="project-title">Media pitch or press release</h3>
-        <div class="project-img">Add document image or excerpt</div>
-        <p class="project-desc">Add a press release, media pitch, or communications brief you wrote. Show the thinking behind the angle — what made it newsworthy, and why you framed it the way you did.</p>
-        <p class="project-result">Add placement or outcome</p>
-      </div>
-      <div class="project-card">
-        <p class="project-type">Copywriting</p>
-        <h3 class="project-title">Feature story or long-form copy</h3>
-        <div class="project-img">Add image or copy excerpt</div>
-        <p class="project-desc">A piece of writing you're proud of — whether that's a feature story, employee profile, speech, or internal communication. Show the range of your written voice.</p>
-        <p class="project-result">Add note or context</p>
-      </div>
-      <div class="project-card">
-        <p class="project-type">Add your asset</p>
-        <h3 class="project-title">Asset or creative title</h3>
-        <div class="project-img">Add image</div>
-        <p class="project-desc">Describe the asset and what it was built for.</p>
-        <p class="project-result">Replace with result</p>
+        <p class="project-type">Editorial</p>
+        <h3 class="project-title">Long-form features & editorial copy</h3>
+        <div class="project-img">
+          <img src="dsta-employee-features.png" alt="DSTA feature story — Brightsparks eMagazine" />
+        </div>
+        <p class="project-desc">Wrote feature stories for internal and external publications — profiling engineers, covering technology milestones, and communicating DSTA's work in language that made complex defence tech accessible and compelling.</p>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="footer-left"><em>That's the full picture.</em></div>
-    <div class="footer-right"><a href="index.html">← Back to portfolio</a></div>
+    <div class="footer-right"><a href="index.html">← Back to Grace's portfolio</a></div>
   </footer>
 
   <script>
+    // Cards
     const cards = document.querySelectorAll('.project-card');
-    const obs = new IntersectionObserver((entries) => {
+    const cardObs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
           setTimeout(() => e.target.classList.add('visible'), i * 80);
-          obs.unobserve(e.target);
+          cardObs.unobserve(e.target);
         }
       });
     }, { threshold: 0.08 });
-    cards.forEach(c => obs.observe(c));
+    cards.forEach(c => cardObs.observe(c));
+
+    // Metrics
+    const metrics = document.querySelectorAll('.metric-cell');
+    const metObs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          metObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    metrics.forEach(m => metObs.observe(m));
   </script>
 </body>
 </html>
