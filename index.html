@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grace Adele — 9–6 & 6–9</title>
+  <title>Grace Adele Lim — 9–6 & 6–9</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -321,15 +321,97 @@
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes drawLine {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+
+    /* Hero entrance */
     .hero-left > * { animation: fadeUp 0.8s ease forwards; opacity: 0; }
     .hero-eyebrow  { animation-delay: 0.1s; }
     .hero-name     { animation-delay: 0.25s; }
     .hero-tagline  { animation-delay: 0.4s; }
     .scroll-hint   { animation-delay: 0.55s; }
-    .hero-desc     { animation: fadeUp 0.8s 0.4s ease forwards; opacity: 0; }
+    .hero-desc     { animation: fadeUp 0.8s 0.35s ease forwards; opacity: 0; }
+
+    /* Scroll-reveal base state */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Timeline items */
+    .timeline-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+    /* Stat numbers count-up feel — just a fade+scale */
+    .stat { opacity: 0; transform: scale(0.9); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .stat.visible { opacity: 1; transform: scale(1); }
+
+    /* Hobby cards stagger */
+    .hobby-card {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+    }
+    .hobby-card.visible { opacity: 1; transform: translateY(0); }
+
+    /* Section headers slide in */
+    .section-header {
+      overflow: hidden;
+    }
+    .section-title {
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .section-title.visible { opacity: 1; transform: translateY(0); }
+
+    /* Timeline vertical line draw */
+    .timeline::before {
+      transform-origin: top;
+      animation: none;
+    }
+    .timeline.line-visible::before {
+      animation: drawLine 1.2s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+
+    /* Nav link underline hover */
+    .nav-links a {
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Tag hover pop */
+    .tag {
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .tag:hover { background: var(--ink); color: var(--paper); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -337,7 +419,7 @@
       .hero { grid-template-columns: 1fr; }
       .hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
       .hero-right { min-height: 40vh; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-      .big-hours { font-size: 4.5rem; }
+      .big-hours { font-size: 5rem; }
       .about-grid { grid-template-columns: 1fr; }
       .about-col-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
       .timeline::before { left: 5rem; }
@@ -352,7 +434,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">YN</a>
+    <a href="index.html" class="nav-logo">GAL</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#nine-six">9–6</a></li>
@@ -384,26 +466,26 @@
       <h2 class="section-title">About <em>Me</em></h2>
     </div>
     <div class="about-grid">
-      <div class="about-col-left">
+      <div class="about-col-left reveal">
         <p class="about-label">In a sentence</p>
         <p class="about-statement">A marketer who <em>thinks</em> in strategy, makes things <em>carefully</em>, and waters her plants <em>inconsistently</em>.</p>
       </div>
-      <div class="about-col-right">
+      <div class="about-col-right reveal">
         <div class="about-body">
-          <p>Hi — I'm Grace. I've spent 7 years building brands and running campaigns across Singapore, Thailand, and Indonesia. I've worked in defence comms, energy, ed-tech, and SaaS — which sounds scattered, but the through-line is always the same: figure out what actually makes people pay attention, and then make that.</p>
-          <p>I like the full stack of marketing — the strategy and the spreadsheet, the campaign brief and the caption. I'm comfortable owning a budget, managing an agency, and writing the copy myself when it needs to be just right.</p>
+          <p>Hi — I'm Grace. I've spent 7 years in marketing and communications. I've worked in defence comms, energy, ed-tech, and cybersecurity — which sounds scattered, but the through-line is always the same: figure out what actually makes people pay attention, and then make that.</p>
+          <p>I like the full stack of marketing — the strategy, the campaign brief and the caption. I'm comfortable owning a budget, managing agencies, and writing the copy myself when it needs to be just right.</p>
           <p>Outside of that, I make things with my hands, move my body, and attempt to maintain a small collection of plants that are, at best, tolerating me.</p>
         </div>
         <div class="stat-row">
-          <div class="stat">
+          <div class="stat reveal">
             <div class="stat-num">7</div>
             <div class="stat-label">Years in Marketing</div>
           </div>
-          <div class="stat">
+          <div class="stat reveal">
             <div class="stat-num">4</div>
             <div class="stat-label">Hobbies after hours</div>
           </div>
-          <div class="stat">
+          <div class="stat reveal">
             <div class="stat-num">∞</div>
             <div class="stat-label">Yarn in my stash</div>
           </div>
@@ -454,7 +536,7 @@
           <div class="timeline-body">
             <p class="timeline-role">Marketing Executive</p>
             <p class="timeline-company">Crimson Education</p>
-            <p class="timeline-desc">Built out the social and email engine from scratch — Telegram, WhatsApp, Facebook, nurture sequences — and ran webinar campaigns that contributed meaningful revenue, fast.</p>
+            <p class="timeline-desc">Stepped into an existing social and email setup across Telegram, WhatsApp, and Facebook — optimised it, tightened the nurture sequences, and ran webinar campaigns that contributed meaningful revenue, fast.</p>
             <div class="timeline-highlight">
               <span>S$800K+</span> in webinar revenue within 6 months &nbsp;·&nbsp;
               <span>4× lead growth</span> across social channels &nbsp;·&nbsp;
@@ -479,7 +561,7 @@
           <div class="timeline-body">
             <p class="timeline-role">Marketing Executive</p>
             <p class="timeline-company">Senoko Energy</p>
-            <p class="timeline-desc">User acquisition in a competitive commodity market — working with media and creative agencies, managing landing pages, and building a partner programme from the ground up.</p>
+            <p class="timeline-desc">User acquisition in a competitive commodity market — working with media and creative agencies, managing landing pages, and growing a partner programme that expanded reach across 14+ organisations.</p>
             <div class="timeline-highlight">
               <span>14+ strategic partners</span> onboarded &nbsp;·&nbsp;
               <span>50% growth</span> on Instagram &nbsp;·&nbsp;
@@ -503,7 +585,7 @@
           <div class="timeline-body">
             <p class="timeline-role">Corp. Comms Asst. Manager</p>
             <p class="timeline-company">DSTA</p>
-            <p class="timeline-desc">Where I learned to write clearly, work with journalists, and tell stories that serve a purpose. Media relations, employer branding, internal comms — and coverage in CNA, The Straits Times, and Lianhe Zaobao.</p>
+            <p class="timeline-desc">Where I learned to write clearly, work with journalists, and tell stories that serve a purpose. Media relations, employer branding, internal comms — and coverage in CNA, The Straits Times, and Lianhe Zaobao. (All written by hand, pre-GenAI. Yes, really.)</p>
             <div class="timeline-highlight">
               <span>20% increase</span> in social engagement &nbsp;·&nbsp;
               Coverage in <span>CNA, The Straits Times & Lianhe Zaobao</span>
@@ -560,14 +642,68 @@
   <footer>
     <div class="footer-left">Let's talk — <em>I don't bite.</em></div>
     <div class="footer-right">
-      <a href="/cdn-cgi/l/email-protection#364f59434476535b575f5a1855595b"><span class="__cf_email__" data-cfemail="89f0e6fcfbc9ece4e8e0e5a7eae6e4">[email&#160;protected]</span></a>
+      <a href="/cdn-cgi/l/email-protection#4b32243e390b2e262a222765282426"><span class="__cf_email__" data-cfemail="cbb2a4beb98baea6aaa2a7e5a8a4a6">[email&#160;protected]</span></a>
       &nbsp;·&nbsp;
-      <a href="https://www.linkedin.com/in/graceadelelimxy/" target="_blank">linkedin.com/in/graceadelelimxy</a>
+      <a href="https://https://linkedin.com/in/graceadelim" target="_blank">linkedin.com/in/graceadelim</a>
     </div>
   </footer>
+  <script>
+    // ── Intersection Observer for scroll reveals ──
+    const revealEls = document.querySelectorAll('.reveal, .timeline-item, .stat, .hobby-card, .section-title');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // stagger siblings slightly
+          const siblings = [...entry.target.parentElement.children].filter(el => el.classList.contains(entry.target.classList[0]));
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 80);
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    const items = document.querySelectorAll('.timeline-item');
-    const observer = new IntersectionObserver((entries) => {
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // ── Timeline line draw ──
+    const timeline = document.querySelector('.timeline');
+    if (timeline) {
+      const lineObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          timeline.classList.add('line-visible');
+          lineObs.disconnect();
+        }
+      }, { threshold: 0.05 });
+      lineObs.observe(timeline);
+    }
+
+    // ── Stat number count-up animation ──
+    const statNums = document.querySelectorAll('.stat-num');
+    const countObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isInte
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = el.textContent.trim();
+          if (target === '∞') { countObs.unobserve(el); return; }
+          const num = parseInt(target);
+          if (isNaN(num)) { countObs.unobserve(el); return; }
+          let start = 0;
+          const duration = 1000;
+          const step = (timestamp) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * num);
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = num;
+          };
+          requestAnimationFrame(step);
+          countObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNums.forEach(el => countObs.observe(el));
+  </script>
+</body>
+</html>
