@@ -8,191 +8,76 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --ink: #0f0e0b;
-      --paper: #f5f0e8;
-      --cream: #ede7d6;
-      --accent: #6b7c45;
-      --muted: #7a7060;
-      --gutter: 3rem;
-      --nav-h: 57px;
+      --ink: #0f0e0b; --paper: #f5f0e8; --cream: #ede7d6;
+      --accent: #6b7c45; --muted: #7a7060;
+      --gutter: 3rem; --nav-h: 57px; --section-gap: 7rem;
     }
     html { scroll-behavior: smooth; }
     body { background: var(--paper); color: var(--ink); font-family: 'DM Mono', monospace; cursor: crosshair; overflow-x: hidden; }
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 9999; opacity: 0.5;
-    }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
 
-    /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); padding: 0 var(--gutter); border-bottom: 1.5px solid var(--ink); background: var(--paper); }
     .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
     .nav-back { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
     .nav-back::before { content: '←'; }
     .nav-back:hover { color: var(--accent); }
 
-    /* HERO */
-    .job-hero { padding-top: var(--nav-h); border-bottom: 1.5px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr; min-height: 52vh; }
-    .job-hero-left { padding: 4.5rem var(--gutter); border-right: 1.5px solid var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
-    .job-eyebrow { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
-    .job-company { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(4rem, 10vw, 11rem); line-height: 0.88; letter-spacing: -0.03em; margin-top: 1.2rem; }
+    .job-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; padding: calc(var(--nav-h) + 5rem) var(--gutter) 2.5rem; }
+    .job-eyebrow { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; display: block; }
+    .job-company { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(4rem, 10vw, 11rem); line-height: 0.88; letter-spacing: -0.03em; }
     .job-company em { font-style: italic; color: var(--accent); }
-    .job-role { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 1.8rem; }
-    .job-hero-right { padding: 4.5rem var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; }
-    .job-summary { font-size: 0.88rem; line-height: 1.95; max-width: 440px; margin-left: auto; }
+    .job-role { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 2rem; display: block; }
+    .job-hero-right { display: flex; align-items: flex-start; }
+    .job-summary { font-size: 0.88rem; line-height: 1.95; max-width: 440px; }
     .job-summary strong { color: var(--accent); font-weight: 500; }
 
-    /* METRICS — 3 cells only */
-    .metrics-band { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1.5px solid var(--ink); }
-    .metric-cell { padding: 2.5rem var(--gutter); border-right: 1.5px solid var(--ink); }
-    .metric-cell:last-child { border-right: none; }
-    .metric-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; line-height: 1; color: var(--accent); }
-    .metric-label { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
+    .metrics-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 0 var(--gutter) 6rem; }
+    .metric-row { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.4rem 0; border-top: 1px solid var(--cream); border-right: 1px solid var(--cream); padding-right: 2rem; padding-left: 0; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .metric-row:last-child { border-right: none; }
+    .metric-row:not(:first-child) { padding-left: 2rem; }
+    .metric-row.visible { opacity: 1; transform: translateY(0); }
+    .metric-num { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 3rem); font-weight: 900; line-height: 1; color: var(--ink); }
+    .metric-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.03em; line-height: 1.5; }
 
-    /* SECTIONS */
-    section { border-bottom: 1.5px solid var(--ink); }
-    .section-header { display: grid; grid-template-columns: 4rem 1fr; align-items: baseline; padding: 1.4rem var(--gutter); border-bottom: 1.5px solid var(--ink); }
-    .section-number { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); }
-    .section-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2rem, 4vw, 3.8rem); letter-spacing: -0.03em; line-height: 1; }
-    .section-title em { font-style: italic; color: var(--accent); }
+    .narrative-section { padding: var(--section-gap) var(--gutter); opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .narrative-section.visible { opacity: 1; transform: translateY(0); }
+    .narrative-tag { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+    .narrative-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2rem, 3.5vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1.5rem; }
+    .narrative-title em { font-style: italic; color: var(--accent); }
+    .narrative-desc { font-size: 0.82rem; line-height: 2; color: var(--muted); max-width: 600px; margin-bottom: 1.5rem; }
+    .narrative-result { font-size: 0.73rem; line-height: 1.9; color: var(--muted); margin-bottom: 3rem; }
+    .narrative-result span { color: var(--accent); font-weight: 500; }
 
-    /* CARDS */
-    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-    .project-card {
-      padding: 3rem var(--gutter);
-      border-right: 1.5px solid var(--ink);
-      border-bottom: 1.5px solid var(--ink);
-      display: flex; flex-direction: column; gap: 1rem;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:nth-child(3n) { border-right: none; }
-    .project-card:last-child:nth-child(3n+1) { border-right: none; grid-column: 1 / -1; }
+    .img-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+    .img-row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .img-block { border-radius: 1rem; }
+    .img-block img { width: 100%; height: auto; display: block; border-radius: 1rem; transition: transform 0.5s ease; }
+    .img-block:hover img { transform: scale(1.02); }
+    a.img-block { display: block; text-decoration: none; cursor: pointer; }
+    .img-full { border-radius: 1rem; overflow: hidden; }
+    .img-full img { width: 100%; height: auto; display: block; border-radius: 1rem; transition: transform 0.5s ease; }
+    .img-full:hover img { transform: scale(1.01); }
+    .section-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    @media (max-width: 768px) { .section-2col { grid-template-columns: 1fr; gap: 2rem; } }
 
-    .project-type { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
-    .project-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
-    .project-desc { font-size: 0.76rem; line-height: 1.85; color: var(--muted); flex: 1; }
-    .project-result { font-size: 0.7rem; line-height: 1.7; padding-top: 1rem; border-top: 1px solid var(--cream); color: var(--muted); }
-    .project-result span { color: var(--accent); font-weight: 500; }
-
-    /* Real images */
-    .project-img { width: 100%; }
-    .project-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    .project-card:hover .project-img img { transform: scale(1.02); }
-
-    /* WIDE CARD — text on top, images in a natural row below */
-    .project-card.wide {
-      grid-column: 1 / -1;
-      border-right: none;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .wide-left { display: flex; flex-direction: column; gap: 1rem; }
-    .wide-right {
-      display: flex;
-      flex-direction: row;
-      gap: 1.5rem;
-      align-items: flex-start;
-    }
-    .wide-img { flex: 1; min-width: 0; }
-    .wide-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    .project-card.wide:hover .wide-img img { transform: scale(1.01); }
-
-    .project-card.wide.social-card {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .social-text { display: flex; flex-direction: column; gap: 1rem; max-width: 640px; }
-    .social-images {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      width: 380px;
-      flex-shrink: 0;
-    }
-    .social-images img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid var(--cream);
-    }
-    .project-card.wide.social-card {
-      display: flex;
-      flex-direction: row;
-      gap: 3rem;
-      align-items: flex-start;
-    }
-    .social-text { display: flex; flex-direction: column; gap: 1rem; flex: 1; }
-
-    /* Feature stories inline layout */
-    .feature-card {
-      display: flex;
-      flex-direction: row;
-      gap: 2.5rem;
-      align-items: flex-start;
-      grid-column: 1 / -1;
-      border-right: none;
-    }
-    .feature-card .feature-img {
-      width: 260px;
-      flex-shrink: 0;
-    }
-    .feature-card .feature-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid var(--cream);
-    }
-    .feature-card .feature-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      flex: 1;
-    }
-
-    /* FOOTER */
-    footer { padding: 2.5rem var(--gutter); display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid var(--ink); }
+    footer { padding: 4rem var(--gutter) 3rem; display: flex; justify-content: space-between; align-items: center; }
     .footer-left { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; }
     .footer-left em { font-style: italic; color: var(--accent); }
     .footer-right { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
     .footer-right a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .footer-right a:hover { color: var(--accent); }
 
-    /* ANIMATIONS */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .job-hero-left > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
-    .job-eyebrow { animation-delay: 0.05s; }
-    .job-company { animation-delay: 0.15s; }
-    .job-role { animation-delay: 0.25s; }
-    .job-hero-right .job-summary { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
+    .job-eyebrow { animation-delay: 0.05s; } .job-company { animation-delay: 0.15s; } .job-role { animation-delay: 0.3s; }
+    .job-summary { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
 
-    .metric-cell { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .metric-cell.visible { opacity: 1; transform: translateY(0); }
-
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      :root { --gutter: 1.5rem; }
-      .job-hero { grid-template-columns: 1fr; min-height: auto; }
-      .job-hero-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
-      .job-summary { margin-left: 0; }
-      .metrics-band { grid-template-columns: 1fr 1fr; }
-      .metric-cell:nth-child(2) { border-right: none; }
-      .metric-cell:nth-child(3) { border-top: 1.5px solid var(--ink); grid-column: 1 / -1; }
-      .project-grid { grid-template-columns: 1fr; }
-      .project-card, .project-card.wide { border-right: none; grid-column: auto; grid-template-columns: 1fr; }
+      :root { --gutter: 1.5rem; --section-gap: 4rem; }
+      .job-hero { grid-template-columns: 1fr; gap: 2.5rem; padding: calc(var(--nav-h) + 3rem) var(--gutter) 3rem; }
+      .metrics-band { grid-template-columns: 1fr 1fr; gap: 0; }
+      .metric-row { border-right: none; padding-left: 0 !important; padding-right: 0; }
+      .img-row-2 { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
@@ -204,12 +89,11 @@
     <a href="index.html" class="nav-back">Back to portfolio</a>
   </nav>
 
-  <!-- HERO -->
   <div class="job-hero">
     <div class="job-hero-left">
-      <p class="job-eyebrow">Jan 2019 – Apr 2021 &nbsp;·&nbsp; Singapore</p>
+      <span class="job-eyebrow">Jan 2019 – Apr 2021 &nbsp;·&nbsp; Singapore</span>
       <h1 class="job-company">DS<em>TA</em></h1>
-      <p class="job-role">Corporate Communications Asst. Manager</p>
+      <span class="job-role">Corporate Communications Asst. Manager</span>
     </div>
     <div class="job-hero-right">
       <p class="job-summary">
@@ -218,91 +102,65 @@
     </div>
   </div>
 
-  <!-- METRICS — 3 only -->
   <div class="metrics-band">
-    <div class="metric-cell">
-      <div class="metric-num">20%</div>
-      <div class="metric-label">Increase in social followers & engagement</div>
+    <div class="metric-row">
+      <span class="metric-num">20%</span>
+      <span class="metric-label">increase in social followers & engagement</span>
     </div>
-    <div class="metric-cell">
-      <div class="metric-num">3</div>
-      <div class="metric-label">Major media outlets — CNA, Straits Times, Lianhe Zaobao</div>
+    <div class="metric-row">
+      <span class="metric-num">3</span>
+      <span class="metric-label">major media outlets — CNA, Straits Times, Zaobao</span>
     </div>
-    <div class="metric-cell">
-      <div class="metric-num">2+</div>
-      <div class="metric-label">Years managing social, media &amp; internal comms</div>
+    <div class="metric-row">
+      <span class="metric-num">2+</span>
+      <span class="metric-label">years managing social, media & internal comms</span>
     </div>
   </div>
 
-  <!-- SOCIAL MEDIA — lead section -->
-  <section>
-    <div class="section-header">
-      <span class="section-number">01</span>
-      <h2 class="section-title">Social <em>Media</em></h2>
-    </div>
-    <div class="project-grid">
-
-      <div class="project-card wide social-card">
-        <div class="social-text">
-          <p class="project-type">Facebook &amp; Instagram</p>
-          <h3 class="project-title">Social media management & employer branding</h3>
-          <p class="project-desc">Managed Facebook and Instagram for DSTA — developing content that balanced recruitment messaging, organisational news, and brand storytelling for a public-sector audience where tone and trust matter as much as reach.</p>
-          <p class="project-desc">This included employee feature series, scholar spotlights, and recruitment campaigns designed to make a government agency feel human and attract the right talent.</p>
-          <p class="project-result"><span>20% growth</span> in followers and engagement across Facebook &amp; Instagram</p>
-        </div>
-        <div class="social-images">
-          <img src="dsta-content-creation-1.png" alt="DSTA social content — scholar spotlight" />
-          <img src="dsta-content-creation-2.png" alt="DSTA Instagram and social content examples" />
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- MEDIA RELATIONS -->
-  <section>
-    <div class="section-header">
-      <span class="section-number">02</span>
-      <h2 class="section-title">Media <em>Relations</em></h2>
-    </div>
-    <div class="project-grid">
-
-      <div class="project-card wide">
-        <div class="wide-left">
-          <p class="project-type">Press Coverage</p>
-          <h3 class="project-title">Coverage in CNA, The Straits Times & Lianhe Zaobao</h3>
-          <p class="project-desc">Led media relations — identifying story angles, pitching to journalists, and managing spokesperson preparation for Singapore's three main English and Chinese-language outlets. Coverage spanned technology programmes, national service milestones, and DSTA's young defence scientists initiative.</p>
-          <p class="project-result">Secured coverage in <span>Channel NewsAsia</span>, <span>The Straits Times</span> and <span>Lianhe Zaobao</span></p>
-        </div>
-        <div class="wide-right">
-          <div class="wide-img">
-            <img src="straits-times-news.png" alt="The Straits Times coverage — Student develops algorithm to detect fake news" />
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FEATURE STORIES -->
-  <section>
-    <div class="section-header">
-      <span class="section-number">03</span>
-      <h2 class="section-title">Feature <em>Stories</em></h2>
-    </div>
-    <div class="project-grid">
-      <div class="project-card feature-card">
-        <div class="feature-img">
-          <img src="dsta-employee-features.png" alt="DSTA feature story — Brightsparks eMagazine" />
-        </div>
-        <div class="feature-text">
-          <p class="project-type">Editorial</p>
-          <h3 class="project-title">Long-form features & editorial copy</h3>
-          <p class="project-desc">Wrote feature stories for internal and external publications — profiling engineers, covering technology milestones, and communicating DSTA's work in language that made complex defence tech accessible and compelling.</p>
-        </div>
+  <!-- 01 SOCIAL MEDIA -->
+  <div class="narrative-section">
+    <span class="narrative-tag">01 / Social Media</span>
+    <h2 class="narrative-title">Social <em>Media</em></h2>
+    <p class="narrative-desc">Managed Facebook and Instagram for DSTA — developing content that balanced recruitment messaging, organisational news, and brand storytelling for a public-sector audience where tone and trust matter as much as reach. This included employee feature series, scholar spotlights, and recruitment campaigns designed to make a government agency feel human and attract the right talent.</p>
+    <p class="narrative-result"><span>20% growth</span> in followers and engagement across Facebook & Instagram</p>
+    <div class="img-stack">
+      <div class="img-block"><img src="brand_assets/DSTA/DSTA-Instagram-1.png" alt="DSTA Instagram content" /></div>
+      <div class="img-block"><img src="brand_assets/DSTA/DSTA-Instagram-2.png" alt="DSTA Instagram content" /></div>
+      <div class="img-row-2">
+        <a href="https://www.instagram.com/p/CMbHAgAnUp-/?igsh=MTJ6MGoxcjJ2bGMxeg%3D%3D" target="_blank" rel="noopener" class="img-block" style="aspect-ratio: 1168/650; overflow: hidden;"><img src="brand_assets/DSTA/dsta-video-1.png" alt="DSTA video — Instagram" style="width:100%;height:100%;object-fit:cover;border-radius:1rem;" /></a>
+        <a href="https://www.instagram.com/tv/CK03DQsnaET/?igsh=djAzZHhybGdnbmMz" target="_blank" rel="noopener" class="img-block" style="aspect-ratio: 1168/650; overflow: hidden;"><img src="brand_assets/DSTA/dsta-video-2.png" alt="DSTA video — Instagram TV" style="width:100%;height:100%;object-fit:cover;border-radius:1rem;" /></a>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- 02 MEDIA RELATIONS -->
+  <div class="narrative-section">
+    <div class="section-2col">
+      <div>
+        <span class="narrative-tag">02 / Media Relations</span>
+        <h2 class="narrative-title">Media <em>Relations</em></h2>
+        <p class="narrative-desc">Led media relations — identifying story angles, pitching to journalists, and managing spokesperson preparation for Singapore's main English and Chinese-language outlets. Coverage spanned technology programmes, national service milestones, and DSTA's young defence scientists initiative.</p>
+        <p class="narrative-result" style="margin-bottom: 0;">Secured coverage in <span>Channel NewsAsia</span>, <span>The Straits Times</span> and <span>Lianhe Zaobao</span></p>
+      </div>
+      <div class="img-block">
+        <img src="brand_assets/DSTA/News-example-2.png" alt="Media coverage example" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 FEATURE STORIES -->
+  <div class="narrative-section">
+    <div class="section-2col">
+      <div>
+        <span class="narrative-tag">03 / Editorial</span>
+        <h2 class="narrative-title">Feature <em>Stories</em></h2>
+        <p class="narrative-desc" style="margin-bottom: 0;">Wrote feature stories for internal and external publications — profiling engineers, covering technology milestones, and communicating DSTA's work in language that made complex defence tech accessible and compelling.</p>
+      </div>
+      <div class="img-block">
+        <img src="brand_assets/DSTA/feature-story%20example.png" alt="DSTA feature story" />
+      </div>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-left"><em>That's the full picture.</em></div>
@@ -310,29 +168,22 @@
   </footer>
 
   <script>
-    // Cards
-    const cards = document.querySelectorAll('.project-card');
-    const cardObs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 80);
-          cardObs.unobserve(e.target);
-        }
+    const sections = document.querySelectorAll('.narrative-section');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
       });
-    }, { threshold: 0.08 });
-    cards.forEach(c => cardObs.observe(c));
+    }, { threshold: 0.06 });
+    sections.forEach(s => obs.observe(s));
 
-    // Metrics
-    const metrics = document.querySelectorAll('.metric-cell');
+    const metricRows = document.querySelectorAll('.metric-row');
     const metObs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 100);
-          metObs.unobserve(e.target);
-        }
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 120); metObs.unobserve(e.target); }
       });
     }, { threshold: 0.2 });
-    metrics.forEach(m => metObs.observe(m));
+    metricRows.forEach(m => metObs.observe(m));
+
   </script>
 </body>
 </html>

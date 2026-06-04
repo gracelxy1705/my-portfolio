@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Focused Events & Workshops — Grace Adele Lim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #0f0e0b; --paper: #f5f0e8; --cream: #ede7d6;
+      --accent: #6b7c45; --muted: #7a7060;
+      --gutter: 3rem; --nav-h: 57px; --gap: 0.6rem; --radius: 1rem;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Mono', monospace; cursor: crosshair; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); padding: 0 var(--gutter); border-bottom: 1.5px solid var(--ink); background: var(--paper); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+    .nav-back { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back::before { content: '←'; }
+    .nav-back:hover { color: var(--accent); }
+
+    .project-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; padding: calc(var(--nav-h) + 4rem) var(--gutter) 4rem; }
+    .project-eyebrow { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; display: block; }
+    .project-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(2.4rem, 5vw, 6rem); line-height: 0.9; letter-spacing: -0.03em; }
+    .project-title em { font-style: italic; color: var(--accent); }
+    .project-type { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 1.8rem; display: block; }
+    .project-right { padding-top: 0.5rem; }
+    .project-meta { display: flex; flex-direction: column; gap: 1.2rem; }
+    .meta-label { font-size: 0.48rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.25rem; }
+    .meta-value { font-size: 0.7rem; color: var(--muted); line-height: 1.6; display: block; }
+
+    .text-section { padding: 4rem var(--gutter); }
+    .text-section.will-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .text-section.in { opacity: 1; transform: translateY(0); }
+    .text-section-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .text-section-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5rem; }
+    .text-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1.2rem; }
+    .text-heading { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(1.6rem, 2.5vw, 2.6rem); letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 1.4rem; }
+    .text-heading em { font-style: italic; color: var(--accent); }
+    .text-body { font-size: 0.82rem; line-height: 2; color: var(--muted); }
+    .text-sub-label { font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); display: block; margin-top: 1.5rem; margin-bottom: 0.4rem; font-weight: 500; }
+    .text-list { font-size: 0.82rem; line-height: 2; color: var(--muted); padding-left: 1.2rem; margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.1rem; }
+    .text-list li::marker { color: var(--accent); }
+    .results-inline { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--cream); }
+
+    .section-divider { border: none; border-top: 1px solid var(--cream); margin: 5rem var(--gutter) 0; opacity: 0; transition: opacity 0.7s ease; }
+    .section-divider.in { opacity: 1; }
+
+    .img-stack { padding: 0 var(--gutter); margin-bottom: var(--gap); }
+    .img-stack.will-fade { opacity: 0; transform: translateY(14px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .img-stack.in { opacity: 1; transform: translateY(0); }
+    .img-stack img { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+    .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+    .img-row img { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+    .img-cluster { padding: 0 var(--gutter); margin-bottom: 2rem; }
+    .img-cluster.will-fade { opacity: 0; transform: translateY(14px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .img-cluster.in { opacity: 1; transform: translateY(0); }
+    .img-cluster-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.75rem; }
+    .img-row-2col { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) { .img-row { grid-template-columns: 1fr; } .img-row-2col { grid-template-columns: 1fr; } }
+
+    footer { padding: 4rem var(--gutter) 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--cream); margin-top: 5rem; }
+    .footer-left { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; }
+    .footer-left a { color: var(--accent); text-decoration: none; font-style: italic; }
+    .footer-right a { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--accent); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .project-hero > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+    .project-hero > *:first-child { animation-delay: 0.08s; }
+    .project-hero > *:last-child { animation-delay: 0.2s; }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 1.5rem; }
+      .project-hero { grid-template-columns: 1fr; gap: 2rem; padding: calc(var(--nav-h) + 2.5rem) var(--gutter) 2.5rem; }
+      .text-section-2col { grid-template-columns: 1fr; gap: 2.5rem; }
+      .text-section-3col { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">GAL</a>
+    <a href="cloudsine.html" class="nav-back">Back to Cloudsine</a>
+  </nav>
+
+  <div class="project-hero">
+    <div>
+      <span class="project-eyebrow">CloudsineAI &nbsp;·&nbsp; Events</span>
+      <h1 class="project-title">Focused <em>Events &</em> Workshops</h1>
+    </div>
+    <div class="project-right">
+      <div class="project-meta">
+        <div><span class="meta-label">Scope</span><span class="meta-value">Event strategy · speaker comms · promotion · logistics</span></div>
+        <div><span class="meta-label">Key partners</span><span class="meta-value">Amazon Web Services (AWS) · Lorong AI · CyberTIG Centre</span></div>
+        <div><span class="meta-label">Format</span><span class="meta-value">In-person workshops</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 1: Focused Event ── -->
+
+  <div class="text-section">
+    <span class="text-label">01 / Focused Event</span>
+    <h2 class="text-heading">The AI-Fluent Enterprise: <em>GenAI Skills, Guardrails and ROI</em></h2>
+    <p class="text-body" style="margin-top: 1.5rem; max-width: 680px;">I led a co-branded event with AWS and Frost & Sullivan to drive deeper engagement with a targeted audience and accelerate pipeline generation. My role was to design and execute the full event experience, from audience targeting and positioning to post-event nurturing.</p>
+    <div class="text-section-2col" style="margin-top: 2.5rem;">
+      <div>
+        <span class="text-label">Details</span>
+
+        <span class="text-sub-label">Pre-Event</span>
+        <ul class="text-list">
+          <li>Defined event theme and positioning aligned with market trends (AI + security)</li>
+          <li>Managed targeted invite strategy to attract relevant decision-makers (cold outreach on LinkedIn, email outreach etc)</li>
+          <li>Collaborated with AWS on audience alignment and promotion</li>
+        </ul>
+
+        <span class="text-sub-label">During Event</span>
+        <ul class="text-list">
+          <li>Managed on-site coordination and event flow to ensure a smooth experience</li>
+          <li>Acted as emcee, guiding the agenda and maintaining audience engagement</li>
+        </ul>
+
+        <span class="text-sub-label">Post Event</span>
+        <ul class="text-list">
+          <li>Collaborated with sales on post-event follow-ups and pipeline progression</li>
+          <li>Gathered feedback to refine future events</li>
+        </ul>
+      </div>
+      <div>
+        <span class="text-label">Results</span>
+        <ul class="text-list">
+          <li>Generated $90K+ in pipeline</li>
+          <li>Hosted ~30 high-quality attendees</li>
+          <li>Achieved 4.88 average CSAT, reflecting strong engagement and relevance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Promotion</span>
+    <div class="img-row">
+      <img src="brand_assets/CloudsineAI/Events/AWS%20Event/AWS%20Event%20Invite.png" alt="The AI-Fluent Enterprise event invite" />
+      <img src="brand_assets/CloudsineAI/Events/AWS%20Event/AWS%20Event%20Webpage.png" alt="The AI-Fluent Enterprise event webpage" />
+      <img src="brand_assets/CloudsineAI/Events/AWS%20Event/AWS%20Social%20Posts.png" alt="CloudsineAI AWS event social posts" />
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Actual Event</span>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/Events/AWS%20Event/19.png" alt="CloudsineAI AWS focused event — on the day" />
+      <img src="brand_assets/CloudsineAI/Events/AWS%20Event/Screenshot%202026-02-27%20135437.png" alt="Event CSAT results — 4.88 average rating" />
+    </div>
+  </div>
+
+  <!-- ── Section 2: TraceCtrl Bootcamps ── -->
+
+  <hr class="section-divider" />
+
+  <div class="text-section">
+    <span class="text-label">02 / TraceCtrl Bootcamps</span>
+    <h2 class="text-heading">Agentic AI Observability <em>& Control</em></h2>
+    <p class="text-body" style="margin-top: 1.5rem; max-width: 680px;">Hands-on bootcamps targeting developers, designed to build brand awareness for TraceCtrl — CloudsineAI's new AI agent observability product. Run in collaboration with partners Lorong AI and CyberTIG Centre, these workshops required zero marketing spend while still driving strong signups and meaningful product exposure to a highly relevant audience.</p>
+    <div style="margin-top: 2rem;">
+      <span class="text-label">Results</span>
+      <ul class="text-list">
+        <li>30+ signups for each workshop</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Promotion</span>
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0.6rem; align-items: end;">
+      <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+        <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/24%20Apr%20-%201.png" alt="TraceCtrl bootcamp — Lorong AI workshop Apr 24" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+        <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/image.png" alt="TraceCtrl bootcamp — CyberSG TIG bootcamp May 22" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+      </div>
+      <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/Promo-1.jpg" alt="TraceCtrl bootcamp promo post" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+      <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/Promo-2.jpg" alt="TraceCtrl bootcamp promo post 2" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Bootcamp Recap</span>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/Event-post.jpg" alt="TraceCtrl bootcamp event post" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+      <img src="brand_assets/CloudsineAI/Events/TraceCtrl%20Bootcamps/Event-post-2.png" alt="TraceCtrl bootcamp recap post 2" style="width: 100%; height: auto; display: block; border-radius: var(--radius);" />
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Next: <a href="webinars.html">Webinars →</a></div>
+    <div class="footer-right"><a href="cloudsine.html">← Back to Cloudsine</a></div>
+  </footer>
+
+  <script>
+
+    const els = document.querySelectorAll('.img-stack, .img-cluster, .text-section, .section-divider');
+    els.forEach(el => el.classList.add('will-fade'));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), i * 60); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0 });
+    els.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

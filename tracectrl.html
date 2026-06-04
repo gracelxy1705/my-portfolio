@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TraceCtrl — Grace Adele Lim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #0f0e0b; --paper: #f5f0e8; --cream: #ede7d6;
+      --accent: #6b7c45; --muted: #7a7060;
+      --gutter: 3rem; --nav-h: 57px; --gap: 0.6rem; --radius: 1rem;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Mono', monospace; cursor: crosshair; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); padding: 0 var(--gutter); border-bottom: 1.5px solid var(--ink); background: var(--paper); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+    .nav-back { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+    .nav-back::before { content: '←'; }
+    .nav-back:hover { color: var(--accent); }
+
+    .project-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; padding: calc(var(--nav-h) + 4rem) var(--gutter) 4rem; }
+    .project-eyebrow { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; display: block; }
+    .project-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(3.5rem, 8vw, 9rem); line-height: 0.88; letter-spacing: -0.03em; }
+    .project-title em { font-style: italic; color: var(--accent); }
+    .project-type { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 1.8rem; display: block; }
+    .project-right { padding-top: 0.5rem; }
+    .project-summary { font-size: 0.85rem; line-height: 2; color: var(--muted); }
+    .project-summary strong { color: var(--accent); font-weight: 500; }
+    .project-meta { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .meta-label { font-size: 0.48rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.25rem; }
+    .meta-value { font-size: 0.7rem; color: var(--muted); line-height: 1.6; display: block; }
+
+    .text-section { padding: 4rem var(--gutter); }
+    .text-section.will-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .text-section.in { opacity: 1; transform: translateY(0); }
+    .text-section-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .text-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1.2rem; }
+    .text-body { font-size: 0.82rem; line-height: 2; color: var(--muted); }
+    .text-body + .text-body { margin-top: 1rem; }
+    .text-pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem, 1.6vw, 1.4rem); line-height: 1.5; color: var(--ink); letter-spacing: -0.01em; }
+    .text-list { font-size: 0.82rem; line-height: 2; color: var(--muted); padding-left: 1.2rem; margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .text-list li::marker { color: var(--accent); }
+    .text-list strong { color: var(--ink); font-weight: 500; }
+
+    .img-cluster { padding: 0 var(--gutter); margin-bottom: var(--gap); }
+    .img-cluster.will-fade { opacity: 0; transform: translateY(14px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .img-cluster.in { opacity: 1; transform: translateY(0); }
+    .img-cluster-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.75rem; }
+    .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+    .img-row img { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+    .img-row-2col { grid-template-columns: repeat(2, 1fr); }
+    .img-row + .img-row { margin-top: 0.6rem; }
+    .img-single img { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+
+    .section-divider { border: none; border-top: 1px solid var(--cream); margin: 0 var(--gutter); opacity: 0; transition: opacity 0.7s ease; }
+    .section-divider.in { opacity: 1; }
+
+    @media (max-width: 768px) { .text-section-2col { grid-template-columns: 1fr; gap: 2.5rem; } .img-row { grid-template-columns: 1fr; } .img-row-2col { grid-template-columns: 1fr; } }
+
+    footer { padding: 4rem var(--gutter) 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--cream); }
+    .footer-left { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; }
+    .footer-left a { color: var(--accent); text-decoration: none; font-style: italic; }
+    .footer-right a { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-right a:hover { color: var(--accent); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .project-hero > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+    .project-hero > *:first-child { animation-delay: 0.08s; }
+    .project-hero > *:last-child { animation-delay: 0.2s; }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 1.5rem; }
+      .project-hero { grid-template-columns: 1fr; gap: 2rem; padding: calc(var(--nav-h) + 2.5rem) var(--gutter) 2.5rem; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .gallery .g { grid-column: span 1 !important; height: 200px !important; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">GAL</a>
+    <a href="cloudsine.html" class="nav-back">Back to Cloudsine</a>
+  </nav>
+
+  <div class="project-hero">
+    <div>
+      <span class="project-eyebrow">CloudsineAI &nbsp;·&nbsp; 2025</span>
+      <h1 class="project-title">Trace<em>Ctrl</em></h1>
+      <span class="project-type">Product Launch & Go-to-Market</span>
+    </div>
+    <div class="project-right">
+      <p class="project-summary">TraceCtrl was a bet on where AI security is heading. CloudsineAI's GenAI firewall protects GenAI applications — but the frontier was already moving toward agentic AI, where the question isn't what a model says, but what an autonomous agent actually does.</p>
+      <div class="project-meta">
+        <div><span class="meta-label">Scope</span><span class="meta-value">GTM strategy · brand · content · events</span></div>
+        <div><span class="meta-label">Market</span><span class="meta-value">Singapore / SEA</span></div>
+        <div><span class="meta-label">Year</span><span class="meta-value">2025</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <div class="text-section">
+    <div class="text-section-2col">
+      <div>
+        <span class="text-label">Problem</span>
+        <p class="text-body">Cloudsine's GenAI firewall secures GenAI applications — the chatbots and copilots built on large language models. But the industry was already shifting. Agentic AI — systems that don't just answer, but take actions and chain decisions on their own — opens up a different class of risk. You can't simply filter a prompt; you need to trace and observe what an agent is actually doing, step by step.</p>
+        <p class="text-body">TraceCtrl was the natural progression of the firewall: extend Cloudsine's protection from GenAI apps to agentic AI.</p>
+      </div>
+      <div style="padding-top: 1.7rem;">
+        <p class="text-body">The catch — it was new, unproven, and aimed at an audience Cloudsine hadn't sold to directly before: AI developers. Going straight to a full product launch would have been premature. So we reframed it. Not a launch — a 3-month experiment, designed to put TraceCtrl in front of real developers and surface honest signal before investing further.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Brand Identity</span>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/tracectrl.png" alt="TraceCtrl logo" />
+      <img src="brand_assets/CloudsineAI/TraceCtrl/Colour-palette.png" alt="TraceCtrl colour palette" />
+    </div>
+    <div class="img-single" style="margin-top: 0.6rem;">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/tracectrl-banners.png" alt="TraceCtrl rollup banners" />
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Execution -->
+  <div class="text-section">
+    <div class="text-section-2col">
+      <div>
+        <span class="text-label">Execution</span>
+        <p class="text-body">No paid budget. Three-month window to find out whether there was something here. The strategy was simple: lead with credibility and community, not advertising. Four moves to give an unproven product a real presence:</p>
+      </div>
+      <div>
+        <ul class="text-list">
+          <li><strong>Brand identity</strong> — Created the TraceCtrl logo and visual identity from scratch, giving an experimental product enough polish to be taken seriously by a developer audience that notices when something looks unfinished.</li>
+          <li><strong>Thought leadership</strong> — Launched a podcast series, The AI Security Circle, to build authority in agentic AI security and earn attention through conversations and ideas rather than a sales pitch.</li>
+          <li><strong>Community & events</strong> — Organised two hands-on workshops that brought AI developers into the room — the fastest way to get unfiltered feedback and find out whether the problem actually resonated.</li>
+          <li><strong>Social</strong> — Launched the TraceCtrl LinkedIn presence from zero, the connective channel that tied the podcast, workshops, and developer audience together.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">The AI Security Circle</span>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/Podcast-1.png" alt="The AI Security Circle — episode 1" />
+      <img src="brand_assets/CloudsineAI/TraceCtrl/Podcast-2.png" alt="The AI Security Circle — episode 2" />
+    </div>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/podcast-linkedin-1.png" alt="Podcast LinkedIn post — episode 1" />
+      <img src="brand_assets/CloudsineAI/TraceCtrl/podcast-linkedin-2.png" alt="Podcast LinkedIn post — episode 2" />
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Workshops</span>
+    <div class="img-single">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/tracectrl-workshops.png" alt="TraceCtrl developer workshops" />
+    </div>
+  </div>
+
+  <div class="img-cluster">
+    <span class="img-cluster-label">Social</span>
+    <div class="img-row img-row-2col">
+      <img src="brand_assets/CloudsineAI/TraceCtrl/tracectrl-linkedin-posts.png" alt="TraceCtrl LinkedIn content" style="aspect-ratio: 2400/1610; object-fit: cover; object-position: top center;" />
+      <img src="brand_assets/CloudsineAI/TraceCtrl/Screenshot%202026-06-04%20at%202.09.06%E2%80%AFPM.png" alt="TraceCtrl LinkedIn page" />
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Outcome -->
+  <div class="text-section">
+    <div class="text-section-2col">
+      <div>
+        <span class="text-label">Outcome</span>
+        <p class="text-body">The experiment did its job. With no marketing budget, the workshops drew 30+ AI developers and surfaced 8 potential leads — and, just as importantly for an experiment, real and direct feedback from the exact audience TraceCtrl was built for.</p>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <p class="text-pull">30+ AI developers. 8 potential leads. Zero paid budget.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Next: <a href="cospacegpt.html">CoSpaceGPT →</a></div>
+    <div class="footer-right"><a href="cloudsine.html">← Back to Cloudsine</a></div>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.img-cluster, .text-section, .section-divider');
+    els.forEach(el => el.classList.add('will-fade'));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), i * 60); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0 });
+    els.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

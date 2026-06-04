@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grace Adele Lim — 9–6 & 6–9</title>
+  <title>Grace Adele Lim — 9–5 & 5–9</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -179,7 +179,7 @@
     }
 
     /* ── TIMELINE ── */
-    #nine-six .content { padding: 0 var(--gutter) 2rem; }
+    #nine-five .content { padding: 0 var(--gutter) 2rem; }
 
     /* The vertical rule sits at exactly 4rem (matches section-number col) */
     .timeline {
@@ -268,21 +268,15 @@
     .view-work:hover { opacity: 0.65; }
     .view-work::after { content: '→'; }
 
-    /* ── 6–9 HOBBIES ── */
-    #six-nine .content {
+    /* ── 5–9 HOBBIES ── */
+    #five-nine .content {
       display: grid; grid-template-columns: repeat(4, 1fr);
     }
     .hobby-card {
       padding: 3rem 2.5rem;
       border-right: 1.5px solid var(--ink);
-      transition: background 0.3s ease;
     }
     .hobby-card:last-child { border-right: none; }
-    .hobby-card:hover { background: var(--ink); }
-    .hobby-card:hover .hobby-title,
-    .hobby-card:hover .hobby-desc,
-    .hobby-card:hover .hobby-num { color: var(--paper); }
-    .hobby-card:hover .hobby-icon { filter: invert(1) brightness(10); }
 
     .hobby-num {
       font-size: 0.55rem; letter-spacing: 0.2em;
@@ -369,7 +363,7 @@
     .hobby-card {
       opacity: 0;
       transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .hobby-card.visible { opacity: 1; transform: translateY(0); }
 
@@ -424,7 +418,7 @@
       .about-col-left { border-right: none; border-bottom: 1.5px solid var(--ink); }
       .timeline::before { left: 5rem; }
       .timeline-item { grid-template-columns: 5rem 1fr; }
-      #six-nine .content { grid-template-columns: 1fr 1fr; }
+      #five-nine .content { grid-template-columns: 1fr 1fr; }
       .hobby-card:nth-child(2) { border-right: none; }
       .hobby-card:nth-child(3) { border-top: 1.5px solid var(--ink); }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
@@ -437,8 +431,8 @@
     <a href="index.html" class="nav-logo">GAL</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#nine-six">9–6</a></li>
-      <li><a href="#six-nine">6–9</a></li>
+      <li><a href="#nine-five">9–5</a></li>
+      <li><a href="#five-nine">5–9</a></li>
     </ul>
   </nav>
 
@@ -451,7 +445,7 @@
       <p class="scroll-hint">Scroll to explore</p>
     </div>
     <div class="hero-right">
-      <div class="big-hours">9–6<br/>6–9</div>
+      <div class="big-hours">9–5<br/>5–9</div>
       <p class="hero-desc">
         There's the person you are at your desk, and then there's who you become after 6pm.
         This site is both. <strong>7 years of marketing craft</strong> across Singapore and Southeast Asia — and everything else that makes the work worth doing.
@@ -494,11 +488,11 @@
     </div>
   </section>
 
-  <!-- 9–6 -->
-  <section id="nine-six">
+  <!-- 9–5 -->
+  <section id="nine-five">
     <div class="section-header">
       <span class="section-number">02</span>
-      <h2 class="section-title">The <em>9–6</em></h2>
+      <h2 class="section-title">The <em>9–5</em></h2>
     </div>
     <div class="content">
       <div class="timeline">
@@ -605,11 +599,11 @@
     </div>
   </section>
 
-  <!-- 6–9 -->
-  <section id="six-nine">
+  <!-- 5–9 -->
+  <section id="five-nine">
     <div class="section-header">
       <span class="section-number">03</span>
-      <h2 class="section-title">The <em>6–9</em></h2>
+      <h2 class="section-title">The <em>5–9</em></h2>
     </div>
     <div class="content">
       <div class="hobby-card">
@@ -640,11 +634,9 @@
   </section>
 
   <footer>
-    <div class="footer-left">Let's talk — <em>I don't bite.</em></div>
+    <div class="footer-left"><em>That's the full picture.</em></div>
     <div class="footer-right">
-      <a href="/cdn-cgi/l/email-protection#4b32243e390b2e262a222765282426"><span class="__cf_email__" data-cfemail="cbb2a4beb98baea6aaa2a7e5a8a4a6">[email&#160;protected]</span></a>
-      &nbsp;·&nbsp;
-      <a href="https://https://linkedin.com/in/graceadelim" target="_blank">linkedin.com/in/graceadelim</a>
+      <a href="https://linkedin.com/in/graceadelim" target="_blank">linkedin.com/in/graceadelim</a>
     </div>
   </footer>
   <script>
