@@ -322,6 +322,46 @@
       color: var(--muted); transition: color 0.3s;
     }
 
+    /* ── THINGS I'VE BUILT ── */
+    #built .built-content { padding: 0; }
+    .built-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    .built-card { padding: 3rem 2.5rem; border-right: 1.5px solid var(--ink); }
+    .built-card:last-child { border-right: none; }
+    .built-num {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      color: var(--muted); margin-bottom: 2rem;
+    }
+    .built-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+    .built-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.01em; margin-bottom: 1rem;
+    }
+    .built-desc { font-size: 0.78rem; line-height: 1.9; color: var(--muted); }
+    .built-toggle {
+      margin-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); background: none; border: none; padding: 0;
+      cursor: crosshair;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--accent); padding-bottom: 1px;
+      transition: opacity 0.2s ease;
+    }
+    .built-toggle:hover { opacity: 0.6; }
+    .built-toggle:active { opacity: 0.45; }
+    .built-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .built-toggle-icon { display: inline-block; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .built-card.open .built-toggle-icon { transform: rotate(90deg); }
+    .built-preview { display: none; margin-top: 1.4rem; border-radius: 0.75rem; overflow: hidden; max-width: 420px; }
+    .built-preview img { width: 100%; height: auto; display: block; }
+    .built-card.open .built-preview { display: block; animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1); }
+    @media (max-width: 768px) {
+      .built-grid { grid-template-columns: 1fr; }
+      .built-card { border-right: none; border-top: 1.5px solid var(--ink); }
+      .built-card:first-child { border-top: none; }
+    }
+
     /* ── FOOTER ── */
     footer {
       padding: 2.5rem var(--gutter);
@@ -459,6 +499,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#nine-five">9–5</a></li>
       <li><a href="#five-nine">5–9</a></li>
+      <li><a href="#built">Built</a></li>
     </ul>
   </nav>
 
@@ -659,6 +700,37 @@
     </div>
   </section>
 
+  <!-- THINGS I'VE BUILT -->
+  <section id="built">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Things I've <em>Built</em></h2>
+    </div>
+    <div class="built-content">
+      <div class="built-grid">
+        <div class="built-card reveal">
+          <p class="built-num">01 /</p>
+          <span class="built-icon">🖥️</span>
+          <h3 class="built-title">This Portfolio Site</h3>
+          <p class="built-desc">This site was built with Claude Code — designed, coded, and iterated on entirely through conversation with AI.</p>
+        </div>
+        <div class="built-card reveal">
+          <p class="built-num">02 /</p>
+          <span class="built-icon">🗂️</span>
+          <h3 class="built-title">Job Tracker</h3>
+          <p class="built-desc">A Chrome extension that helps job seekers keep track of applications, deadlines, and follow-ups — built to solve my own messy spreadsheet problem.</p>
+          <button class="built-toggle" type="button" aria-expanded="false">
+            <span class="built-toggle-label">View screenshot</span>
+            <span class="built-toggle-icon">→</span>
+          </button>
+          <div class="built-preview">
+            <img src="brand_assets/Job%20Tracker/Job%20Tracker%20Carousel.png" alt="Job Tracker Chrome extension dashboard" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-left"><em>That's the full picture.</em></div>
     <div class="footer-right">
@@ -722,6 +794,16 @@
       });
     }, { threshold: 0.5 });
     statNums.forEach(el => countObs.observe(el));
+
+    // ── Built section: click-to-view screenshot toggle ──
+    document.querySelectorAll('.built-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.built-card');
+        const isOpen = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        btn.querySelector('.built-toggle-label').textContent = isOpen ? 'Hide screenshot' : 'View screenshot';
+      });
+    });
   </script>
 </body>
 </html>
